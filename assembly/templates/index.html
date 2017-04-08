@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'assembly/style.css' %}"/>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <title>c2asm</title>
+</head>
+<body>
+<h1>C++ assembly viewer</h1>
+<form class="cf" , id="code_form">
+    <div class="two-col">
+        <div class="col1">
+            <textarea name="code" id="code" placeholder="Enter the code here..." cols="60" rows="20"></textarea>
+        </div>
+        <div class="col2">
+            <textarea id="output" placeholder="" cols="60" rows="20"></textarea>
+        </div>
+    </div>
+    <select name="compiler" id="compiler">
+        <option selected>GCC 5.4
+    </select>
+    <select id="optimization_level" name="optimization_level">
+        <option selected>-O0
+        <option selected>-O1
+        <option selected>-O2
+        <option selected>-O3
+    </select>
+    <input type="submit" value="Submit" id="input-submit" class="form-style-2">
+</form>
+{% block javascript %}
+    <script>
+        $("#code_form").submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: 'http://localhost:8000/assembly/',
+                type: 'get',
+                data: $('#code').serialize() + '&'
+                + $('#compiler').serialize() + '&'
+                + $('#optimization_level').serialize(),
+                success: function (resp) {
+                    $("#output").val(resp)
+                }
+            });
+        });
+    </script>
+{% endblock %}
+
+</body>
+</html>
