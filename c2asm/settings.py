@@ -25,7 +25,7 @@ SECRET_KEY = '0p-$_-bc79noapo*s_6q_m0%%my259_3c^x%fnl(09&(1%q_if'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['c2asm.com']
+ALLOWED_HOSTS = ['c2asm.com', 'localhost', '127.0.0.1', '0.0.0.0']
 
 
 # Application definition
