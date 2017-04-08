@@ -34,7 +34,7 @@
         $("#code_form").submit(function (e) {
             e.preventDefault();
             $.ajax({
-                url: 'http://localhost:8000/assembly/',
+                url: 'http://c2asm.com/assembly/',
                 type: 'get',
                 data: $('#code').serialize() + '&'
                 + $('#compiler').serialize() + '&'

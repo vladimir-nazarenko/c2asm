@@ -28,16 +28,17 @@ def compile_code(code, optimization_level):
 							  stderr=STDOUT,
 							  shell=True)
 	except CalledProcessError as e:
-		output = "Compilation failed with following output:\n" + e.output
+		output = "Compilation failed with following output:\n" + str(e.output)
+	finally:
+		remove(input_file_name)
 
 	if isfile(file_id):
 		with open(file_id) as assembly_file:
 			content = assembly_file.read()
 		remove(file_id)
 	else:
+
 		content = output
 
-	# clean up
-	remove(input_file_name)
 
 	return content

@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '0p-$_-bc79noapo*s_6q_m0%%my259_3c^x%fnl(09&(1%q_if'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['c2asm.com', 'localhost', '127.0.0.1', '0.0.0.0']
 
@@ -66,6 +66,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'c2asm.wsgi.application'
 
@@ -122,7 +123,9 @@ USE_TZ = True
 #     "/var/www/static/",
 # ]
 
-STATICFILES_DIRS = [BASE_DIR + "/static",]
+STATIC_ROOT = "/var/www/html/c2asm.com/static"
+
+STATICFILES_DIRS = [BASE_DIR + "/static",
+]
 
 STATIC_URL = '/static/'
-STATIC_ROOT = "/var/www/html/c2asm.com/"
