@@ -78,7 +78,9 @@ def compile_code(code, optimization_level, compiler_name):
 							  stderr=STDOUT,
 							  shell=True)
 	except CalledProcessError as e:
-		output = "Compilation failed with following output:\n" + e.output
+		output = "Compilation failed with following output:\n" + str(e.output)
+	finally:
+		remove(input_file_name)
 
 	output_file_name = file_id + "/" + input_file_name + ".s"
 
@@ -88,9 +90,8 @@ def compile_code(code, optimization_level, compiler_name):
 		remove(output_file_name)
 		removedirs(file_id)
 	else:
+
 		content = output
 
-	# clean up
-	remove(input_file_name)
 
 	return content
