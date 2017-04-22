@@ -1,4 +1,4 @@
-from django.shortcuts import render
+# from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseForbidden
 from .compiler_wrapper import compile_code
 import logging
@@ -7,8 +7,8 @@ logger = logging.getLogger("views")
 
 
 # Create your views here.
-def index(request):
-	return render(request, "index.html", context={})
+# def index(request):
+# 	return render(request, "index.html", context={})
 
 
 def assembly(request):
