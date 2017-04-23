@@ -57,7 +57,7 @@ def get_bash_command_for_compiler_execution(compiler, optimization_level, filena
 		"docker run",
 		"-v `pwd`/{0}:/{0}".format(filename),
 		"-v `pwd`/{0}:/out".format(output_dir),
-		"--rm -it",
+		"--rm",
 		compiler.docker_image(),
 		"{0} /{1} -S -O{2} -o /out/{1}.s".format(compiler.compiler_command(), filename, optimization_level[-1])])
 
