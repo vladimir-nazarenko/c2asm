@@ -39,7 +39,7 @@ h1 {
 
 .two-col .col1,
 .two-col .col2 {
-    width 49%;
+    width: 49%;
 }
 
 .two-col .col1 {
@@ -53,3 +53,14 @@ h1 {
 .two-col label {
     display: block;
 }
+
+pre.src {
+    background-color: #eee;
+    height: 500px;
+    /*font-size: 12px;
+    line-height: 14px;
+    padding: 5px;*/
+    overflow-y: scroll;
+    word-break: normal !important;
+    word-wrap: normal !important;
+} 
