@@ -5,6 +5,10 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'assembly/style.css' %}"/>
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <!-- <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script> -->
+    <link rel="stylesheet" href="{% static 'assembly/default.css' %}">
+    <script src="{% static 'assembly/highlight.pack.js' %}"></script>
     <title>c2asm</title>
 </head>
 <body>
@@ -12,10 +16,12 @@
 <form class="cf" , id="code_form">
     <div class="two-col">
         <div class="col1">
-            <textarea name="code" id="code" placeholder="Enter the code here..." cols="60" rows="20"></textarea>
+            <!-- <textarea name="code" id="code" placeholder="Enter the code here..." cols="60" rows="20"></textarea> -->
+            <pre class="src"><code id="code"> </code></pre>
         </div>
         <div class="col2">
-            <textarea id="output" placeholder="" cols="60" rows="20"></textarea>
+            <!-- <textarea id="output" placeholder="" cols="60" rows="20"></textarea> -->
+            <pre class="src"><code id="output"> </code></pre>
         </div>
     </div>
     <select name="compiler" id="compiler">
@@ -27,20 +33,49 @@
         <option selected>-O2
         <option selected>-O3
     </select>
+    <input id="fileupload" type="file" />
     <input type="submit" value="Submit" id="input-submit" class="form-style-2">
 </form>
 {% block javascript %}
     <script>
+        // Variable to store your files
+        var code = "";
+
+        // Add events
+        $('input[type=file]').on('change', function (e) {
+            // read uploaded file content; see https://www.html5rocks.com/ru/tutorials/file/dndfiles/
+            var file = event.target.files[0];
+            var reader = new FileReader();
+            // Closure to capture the file information.
+            reader.onload = (function(theFile) {
+                return function(e) {
+                    code = e.target.result;
+                    var code_hl = hljs.highlight("cpp", code, true);
+                    $("#code").html(code_hl.value);
+                    // Render thumbnail.
+                    //var span = document.createElement('span');
+                    //span.innerHTML = ['<img class="thumb" src="', e.target.result,
+                    //                  '" title="', escape(theFile.name), '"/>'].join('');
+                    //document.getElementById('list').insertBefore(span, null);
+                };
+            })(file);
+
+            // Read in the image file as a data URL.
+            reader.readAsText(file);
+        });
+
         $("#code_form").submit(function (e) {
             e.preventDefault();
+            console.log(code);
             $.ajax({
                 url: 'http://c2asm.com/assembly/',
                 type: 'get',
-                data: $('#code').serialize() + '&'
+                data: "code=" + encodeURIComponent(code) + '&'
                 + $('#compiler').serialize() + '&'
                 + $('#optimization_level').serialize(),
                 success: function (resp) {
-                    $("#output").val(resp)
+                    var resp_hl = hljs.highlight("x86asm", resp, true);
+                    $("#output").html(resp_hl.value);
                 }
             });
         });
